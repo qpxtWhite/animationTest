@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        html,body{margin:0; padding:0;}
+        #cont{position:absolute; top:0; left:0; width:100%; height:100%; background:black;}
+        #cont span{display:block; width:10px; height:10px; position:absolute; top:50%; left:50%; background:white; border-radius: 50%;}
+
+    </style>
+</head>
+<body>
+<div id="cont">
+
+</div>
+<script src="scripts/zepto.js"></script>
+<script src="scripts/jquery.js"></script>
+<script>
+    $.noConflict();
+    window.jq = window.jQuery;
+    delete window.jQuery;
+</script>
+<script src="scripts/velocity.js"></script>
+<script src="scripts/transit.js"></script>
+<script src="scripts/CSSPlugin.js"></script>
+<script src="scripts/TweenLite.js"></script>
+<script>
+    function anZepto(dom, opt){
+        dom = $(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.animate({
+            'transform': 'rotateZ('+(Math.random()*540+180)+'deg)'
+        }, opt.t, function(){
+            dom.animate({
+                'transform': 'rotateZ(0deg)'
+            }, opt.t)
+        })
+    }
+    function anVelocity(dom, opt){
+        dom = $(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.velocity({
+            rotateZ: (Math.random()*540+180)+'deg'
+        }, {
+            duration: opt.t,
+            easing: 'linear',
+            complete: function(){
+                dom.velocity('reverse');
+            }
+        })
+    }
+    function anTransit(dom, opt){
+        dom = jq(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.transition({
+            rotate:(Math.random()*540+180)+'deg'
+        }, opt.t, 'linear', function(){
+            dom.transition({
+                rotate: 0
+            }, opt.t, 'linear')
+        })
+    }
+    function anTweenLite(dom, opt){
+        var $dom = jq(dom);
+        $dom.css({
+            top: opt.y,
+            left: opt.x
+        });
+        var tween = TweenLite.to(dom, opt.t/1000, {
+            rotation: (Math.random()*540+180),
+            transformOrigin: opt.originX + 'px ' + opt.originY+'px',
+            ease: 'linear',
+            onComplete: function(){
+                tween.reverse();
+            }
+        })
+    }
+    function createOpt(){
+        var x = Math.random() * window.innerWidth-5;
+        var y = Math.random() * window.innerHeight-5;
+        var originX = window.innerWidth / 2 - x - 5;
+        var originY = window.innerHeight / 2 - y - 5;
+        return {x:x,y:y,originX:originX, originY: originY, t:5000};
+    }
+
+    var html = '';
+    for(var i=0; i<1000; i++){
+        html += '<span></span>';
+    }
+    var $doms = $(html);
+    $('#cont').html($doms);
+
+    $doms.each(function(index, dom){
+//        anZepto(dom, createOpt());
+//        anTweenLite(dom, createOpt());
+        anVelocity(dom, createOpt());
+//        anTransit(dom, createOpt());
+    })
+</script>
+</body>
+</html>

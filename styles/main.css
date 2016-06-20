@@ -1,0 +1,65 @@
+html,body{margin:0; padding:0; width:100%; height:100%; overflow:hidden;}
+
+.wrap{width:100%; height:100%; overflow:hidden; position:absolute}
+.wrap ul.islider-outer{list-style: none; margin: 0; padding: 0; height: 100%; overflow: hidden; display:block; position:relative; width:100%;}
+.wrap ul.islider-outer>li{position: absolute; top:0; left:0; margin:0; padding:0; list-style: none; overflow:hidden; width:100%; height:100%; display: -moz-box; display: -webkit-box; display: box; -webkit-box-pack: center; box-pack: center; -webkit-box-align: center; box-align: center;}
+
+.item{ width:100%; height:100%; position:absolute; top:0; left:0; overflow:hidden;}
+.item *{position:absolute; display:block; padding:0; margin:0; text-indent:-9999px; display:none;}
+.item .bg{width:50%; height:100%; top:0;}
+.item .bg-left{left:0;}
+.item .bg-right{right:0;}
+.item .center{left:50%; -webkit-transform:translate(-50%, 0); transform:translate(-50%, 0);}
+
+.item-1{z-index:1;}
+.item-1 .bg-left{background:#383838;}
+.item-1 .bg-right{background:#e3eef5;}
+.item-1 .cake-left{background:url(../images/page1/cake-left.png); background-size:cover; right:50%; }
+.item-1 .cake-right{background:url(../images/page1/cake-right.png); background-size:cover; left:50%; }
+.item-1 .title-left{background:url(../images/page1/title-left.png); background-size:cover; right:50%;}
+.item-1 .title-right{background:url(../images/page1/title-right.png); background-size:cover; left:50%;}
+.item-1 .words{background:url(../images/page1/word1.png); background-size:cover; left:6%;}
+.item-1 .words2{background:url(../images/page1/word2.png); background-size:cover; right:5%;}
+.item-1 .knife{background:url(../images/page1/knife.png); background-size:cover; left:0;}
+.item-1 .fork{background:url(../images/page1/fork.png); background-size:cover; right:10px;}
+.item-1 .arrow{background:url(../images/page1/arrow.png); background-size:cover; left:50%; -webkit-animation:arrow 1s infinite; animation:arrow 1s infinite; bottom:100px;}
+
+.item-2{z-index:2;}
+.item-2 .bg-left{background:#383838;}
+.item-2 .bg-right{background:#f4dfe6;}
+.item-2 .title-left{background:url(../images/page2/title-left.png); background-size:cover; right:50%;}
+.item-2 .title-right{background:url(../images/page2/title-right.png); background-size:cover; left:50%;}
+.item-2 .cake{background:url(../images/page2/cake.png); background-size:cover; left:50%;}
+.item-2 .cake2{background:url(../images/page2/cake2.png); background-size:cover; right:0;}
+.item-2 .text{background:url(../images/page2/text.png); background-size:cover; right:12%;}
+.item-2 .rose{background:url(../images/page2/rose.png); background-size:cover; right:3%;}
+.item-2 .words{background:url(../images/page2/word.png); background-size:cover; left:6%;}
+.item-2 .words2{background:url(../images/page2/word2.png); background-size:cover; right:6%;}
+.item-2 .mony{background:url(../images/page2/mony.png); background-size:cover; left:50%;}
+.item-2 .buy{background:url(../images/page2/buy.png); background-size:cover; left:50%;}
+.item-2 .buy.disable{background:url(../images/page2/buy2.png);background-size:cover; left:50%;}
+
+.item-3{z-index:1;}
+.item-3 .bg-left{background:#f4dfe6;}
+.item-3 .bg-right{background:#383838;}
+.item-3 .title-left{background:url(../images/page3/title-left.png); background-size:cover; right:50%}
+.item-3 .title-right{background:url(../images/page3/title-right.png); background-size:cover; left:50%}
+.item-3 .cake{background:url(../images/page3/cake.png); background-size:cover; left:50%;}
+.item-3 .text{background:url(../images/page3/text.png); background-size:cover; left:25%;}
+.item-3 .words{background:url(../images/page3/word.png); background-size:cover; left:8%;}
+.item-3 .words2{background:url(../images/page3/word2.png); background-size:cover; right:5%;}
+.item-3 .litchi{background:url(../images/page3/litchi.png); background-size:cover; left:17%;}
+.item-3 .mony{background:url(../images/page3/mony.png); background-size:cover; left:50%;}
+.item-3 .buy{background:url(../images/page2/buy.png); background-size:cover; left:50%;}
+.item-3 .buy.disable{background:url(../images/page2/buy2.png); background-size:cover; left:50%;}
+.item-3 .cake2{background:url(../images/page3/cake2.png); background-size:cover; left:1%;}
+
+@-webkit-keyframes arrow {
+    0% {-webkit-transform:translateY(0);transform:translateY(0)}
+    100% {-webkit-transform: translateY(100px);transform: translateY(100px)}
+}
+
+@keyframes arrow {
+    0% {-webkit-transform:translateY(0);transform:translateY(0)}
+    100% {-webkit-transform: translateY(100px);transform: translateY(100px)}
+}
