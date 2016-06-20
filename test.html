@@ -4,15 +4,28 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <style>
+        html{font-size:62.5%;}
         html,body{margin:0; padding:0;}
         #cont{position:absolute; top:0; left:0; width:100%; height:100%; background:black;}
         #cont span{display:block; width:10px; height:10px; position:absolute; top:50%; left:50%; background:white; border-radius: 50%;}
-
+        .control{position:absolute; width:100%;}
+        .control select{display:inline-block; width:30%; background:white; color:black; font-size:6rem;}
+        .control button{display:inline-block; font-size:6rem; background:white; color:black}
     </style>
 </head>
 <body>
+
 <div id="cont">
 
+</div>
+<div class="control">
+    <select>
+        <option value="Zepto">Zepto</option>
+        <option value="Velocity">Velocity</option>
+        <option value="Transit">Transit</option>
+        <option value="TweenLite">TweenLite</option>
+    </select>
+    <button>start</button>
 </div>
 <script src="scripts/zepto.js"></script>
 <script src="scripts/jquery.js"></script>
@@ -38,7 +51,9 @@
         }, opt.t, function(){
             dom.animate({
                 'transform': 'rotateZ(0deg)'
-            }, opt.t)
+            }, opt.t, function(){
+                dom.remove();
+            })
         })
     }
     function anVelocity(dom, opt){
@@ -54,7 +69,11 @@
             duration: opt.t,
             easing: 'linear',
             complete: function(){
-                dom.velocity('reverse');
+                dom.velocity('reverse', {
+                    complete: function(){
+                        dom.remove();
+                    }
+                });
             }
         })
     }
@@ -70,7 +89,9 @@
         }, opt.t, 'linear', function(){
             dom.transition({
                 rotate: 0
-            }, opt.t, 'linear')
+            }, opt.t, 'linear', function(){
+                dom.remove();
+            })
         })
     }
     function anTweenLite(dom, opt){
@@ -85,6 +106,9 @@
             ease: 'linear',
             onComplete: function(){
                 tween.reverse();
+            },
+            onReverseComplete: function(){
+                $dom.remove();
             }
         })
     }
@@ -97,18 +121,21 @@
     }
 
     var html = '';
-    for(var i=0; i<1000; i++){
+    for(var i=0; i<500; i++){
         html += '<span></span>';
     }
     var $doms = $(html);
     $('#cont').html($doms);
 
-    $doms.each(function(index, dom){
-//        anZepto(dom, createOpt());
-//        anTweenLite(dom, createOpt());
-        anVelocity(dom, createOpt());
-//        anTransit(dom, createOpt());
+    $('button').on('click', function(){
+        var val = $('select').val();
+        var $doms = $(html);
+        $('#cont').html($doms);
+        $doms.each(function(index, dom){
+            window['an'+val].call(window, dom, createOpt());
+        })
     })
+
 </script>
 </body>
 </html>
