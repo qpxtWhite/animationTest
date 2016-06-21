@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        html{font-size:62.5%;}
+        html,body{margin:0; padding:0;}
+        #cont{position:absolute; top:0; left:0; width:100%; height:100%; background:black;}
+        #cont span{display:block; width:10px; height:10px; position:absolute; top:50%; left:50%; background:white; border-radius: 50%;}
+        .control{position:absolute; width:100%; bottom:0;}
+        .control select{display:inline-block; width:30%; background:white; color:black; font-size:6rem;}
+        .control button{display:inline-block; font-size:6rem; background:white; color:black}
+    </style>
+</head>
+<body>
+
+<div id="cont">
+
+</div>
+<div class="control">
+    <select>
+        <option value="Zepto">Zepto</option>
+        <option value="Velocity">Velocity</option>
+        <option value="Transit">Transit</option>
+        <option value="TweenLite">TweenLite</option>
+    </select>
+    <button>start</button>
+</div>
+<script src="scripts/zepto.js"></script>
+<script src="scripts/jquery.js"></script>
+<script>
+    $.noConflict();
+    window.jq = window.jQuery;
+    delete window.jQuery;
+</script>
+<script src="scripts/velocity.js"></script>
+<script src="scripts/transit.js"></script>
+<script src="scripts/CSSPlugin.js"></script>
+<script src="scripts/TweenLite.js"></script>
+<script>
+    function anZepto(dom, opt){
+        dom = $(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.animate({
+            'transform': 'rotateZ('+(Math.random()*540+180)+'deg)'
+        }, opt.t, function(){
+            dom.animate({
+                'transform': 'rotateZ(0deg)'
+            }, opt.t, function(){
+                dom.remove();
+            })
+        })
+    }
+    function anVelocity(dom, opt){
+        dom = $(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.velocity({
+            rotateZ: (Math.random()*540+180)+'deg'
+        }, {
+            duration: opt.t,
+            easing: 'linear',
+            complete: function(){
+                dom.velocity('reverse', {
+                    complete: function(){
+                        dom.remove();
+                    }
+                });
+            }
+        })
+    }
+    function anTransit(dom, opt){
+        dom = jq(dom);
+        dom.css({
+            top: opt.y,
+            left: opt.x,
+            'transform-origin': opt.originX+'px '+opt.originY+'px'
+        })
+        dom.transition({
+            rotate:(Math.random()*540+180)+'deg'
+        }, opt.t, 'linear', function(){
+            dom.transition({
+                rotate: 0
+            }, opt.t, 'linear', function(){
+                dom.remove();
+            })
+        })
+    }
+    function anTweenLite(dom, opt){
+        var $dom = jq(dom);
+        $dom.css({
+            top: opt.y,
+            left: opt.x
+        });
+        var tween = TweenLite.to(dom, opt.t/1000, {
+            rotation: (Math.random()*540+180),
+            transformOrigin: opt.originX + 'px ' + opt.originY+'px',
+            ease: 'linear',
+            onComplete: function(){
+                tween.reverse();
+            },
+            onReverseComplete: function(){
+                $dom.remove();
+            }
+        })
+    }
+    function createOpt(){
+        var x = Math.random() * window.innerWidth-5;
+        var y = Math.random() * window.innerHeight-5;
+        var originX = window.innerWidth / 2 - x - 5;
+        var originY = window.innerHeight / 2 - y - 5;
+        return {x:x,y:y,originX:originX, originY: originY, t:5000};
+    }
+
+    var html = '';
+    for(var i=0; i<500; i++){
+        html += '<span></span>';
+    }
+    var $doms = $(html);
+    $('#cont').html($doms);
+
+    $('button').on('click', function(){
+        var val = $('select').val();
+        var $doms = $(html);
+        $('#cont').html($doms);
+        $doms.each(function(index, dom){
+            window['an'+val].call(window, dom, createOpt());
+        })
+    })
+
+</script>
+<script src="scripts/stats.min.js"></script>
+<script>
+    var stats = new Stats();
+    stats.showPanel( 0 );
+    document.body.appendChild( stats.dom );
+    function showStats(){
+        stats.update();
+        requestAnimationFrame( showStats );
+    }
+    showStats();
+</script>
+</body>
+</html>
