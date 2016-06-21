@@ -8,7 +8,7 @@
         html,body{margin:0; padding:0;}
         #cont{position:absolute; top:0; left:0; width:100%; height:100%; background:black;}
         #cont span{display:block; width:10px; height:10px; position:absolute; top:50%; left:50%; background:white; border-radius: 50%;}
-        .control{position:absolute; width:100%;}
+        .control{position:absolute; width:100%; bottom:0;}
         .control select{display:inline-block; width:30%; background:white; color:black; font-size:6rem;}
         .control button{display:inline-block; font-size:6rem; background:white; color:black}
     </style>
@@ -136,6 +136,17 @@
         })
     })
 
+</script>
+<script src="scripts/stats.min.js"></script>
+<script>
+    var stats = new Stats();
+    stats.showPanel( 0 );
+    document.body.appendChild( stats.dom );
+    function showStats(){
+        stats.update();
+        requestAnimationFrame( showStats );
+    }
+    showStats();
 </script>
 </body>
 </html>
